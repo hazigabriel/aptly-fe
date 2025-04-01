@@ -1,5 +1,8 @@
 {
-    "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "plugins": ["simple-import-sort", "@typescript-eslint"],
     "rules": {
         "simple-import-sort/imports": "error",

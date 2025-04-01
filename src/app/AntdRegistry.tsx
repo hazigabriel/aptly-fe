@@ -7,8 +7,6 @@ import { AntdRegistry as AntdNextJsRegistry } from '@ant-design/nextjs-registry'
 import { unstableSetRender } from 'antd';
 import { createRoot } from 'react-dom/client';
 
-
-
 // added from https://ant.design/docs/react/v5-for-19
 if (typeof window !== 'undefined') {
     unstableSetRender((node, container) => {
