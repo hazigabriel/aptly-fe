@@ -1,8 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-// const baseUrl = process.env.API_URL || 'http://localhost:3001';
+const baseUrl = process.env.API_URL || 'http://localhost:3001';
 
-const baseUrl = process.env.API_URL || 'http://localhost:3001'
 type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
 const instance = axios.create({
@@ -34,7 +33,7 @@ const request = async <T>(
 
         const res: AxiosResponse = await instance(config);
 
-        return res
+        return res.data;
     } catch (error: any) {
         throw error;
     }

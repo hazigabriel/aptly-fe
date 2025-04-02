@@ -2,32 +2,18 @@
 
 import type { FormProps } from 'antd';
 import { Button, Form, Input, Typography } from 'antd';
-import React, { useEffect } from 'react';
-import { post } from "../../utilities/http"
+import React from 'react';
+
 type FieldType = {
     email?: string;
     password?: string;
 };
 
 export const LoginForm: React.FC<{ title?: string }> = ({ title }) => {
-    useEffect(() => {
-        const fetchRandomImage = async () => {
-            try {
-                const data = await post<{ message: string }>('auth/login', {data: {email: 'test@test.com', password: '123'}});
-                console.log(data); // Set the random image URL to state
-            } catch (error) {
-                console.error('Error fetching random image:', error);
-            }
-        };
-
-        fetchRandomImage();
-        
-    },[])
     const onFinish: FormProps<FieldType>['onFinish'] = values => {
         console.log('Success:', values);
     };
-    // breeds/image/random
-    
+
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] =
         errorInfo => {
             console.log('Failed:', errorInfo);
