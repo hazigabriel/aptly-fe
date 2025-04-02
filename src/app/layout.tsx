@@ -4,7 +4,7 @@ import './globals.css';
 import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-
+import StoreProvider from './StoreProvider';
 import theme from '@/app/theme/themeConfig';
 
 import AntdRegistry from './AntdRegistry';
@@ -34,9 +34,11 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
             >
-                <ConfigProvider theme={theme}>
-                    <AntdRegistry>{children}</AntdRegistry>
-                </ConfigProvider>
+                <StoreProvider>
+                    <ConfigProvider theme={theme}>
+                        <AntdRegistry>{children}</AntdRegistry>
+                    </ConfigProvider>
+                </StoreProvider>
             </body>
         </html>
     );
