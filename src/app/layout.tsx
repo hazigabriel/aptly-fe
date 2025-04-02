@@ -6,7 +6,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import theme from '@/app/theme/themeConfig';
-import { Navigation } from '@/components';
 
 import AntdRegistry from './AntdRegistry';
 
@@ -33,13 +32,11 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
             >
-                <ConfigProvider theme={theme}></ConfigProvider>
-                <AntdRegistry>
-                    <Navigation />
-                    {children}
-                </AntdRegistry>
+                <ConfigProvider theme={theme}>
+                    <AntdRegistry>{children}</AntdRegistry>
+                </ConfigProvider>
             </body>
         </html>
     );
