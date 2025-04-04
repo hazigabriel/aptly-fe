@@ -9,6 +9,8 @@ import { register } from '@/lib/features/user/actions';
 import { jwtDecode } from 'jwt-decode';
 
 type FieldType = {
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
     passwordConfirm: string;
@@ -27,13 +29,11 @@ export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
         }
     }, [userToken]);
 
-    const onFinish: FormProps<FieldType>['onFinish'] = values => {
-        const newUser = {
-            email: values.email,
-            password: values.password,
-        };
-
-        dispatch(register(newUser));
+    const onFinish: FormProps<FieldType>['onFinish'] = ({
+        passwordConfirm,
+        ...values
+    }) => {
+        dispatch(register(values));
     };
 
     return (
@@ -50,6 +50,32 @@ export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
                 autoComplete="off"
                 form={form}
             >
+                <div className="flex gap-4">
+                    <Form.Item<FieldType>
+                        label="First Name"
+                        name="firstName"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please add your first name!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item<FieldType>
+                        label="Last Name"
+                        name="lastName"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please add your last name!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                </div>
                 <Form.Item<FieldType>
                     label="Email"
                     name="email"
@@ -124,7 +150,7 @@ export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
                     Already have an account? Log in here
                 </Typography.Link>
                 {isError ? (
-                    <div className="w-100 max-w-xs text-center">
+                    <div className="flex justify-center">
                         <Typography.Text type="danger">
                             {errorMessage}
                         </Typography.Text>

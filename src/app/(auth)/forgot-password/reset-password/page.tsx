@@ -2,7 +2,7 @@ import Paragraph from 'antd/es/typography/Paragraph';
 import Title from 'antd/es/typography/Title';
 import React from 'react';
 
-import { LoginForm, ResetPasswordForm } from '@/components';
+import { ResetPasswordForm } from '@/components';
 
 const ResetPasswordPage: React.FC = () => {
     return (

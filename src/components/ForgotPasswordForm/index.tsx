@@ -1,22 +1,45 @@
 'use client';
 
+import { forgotPassword } from '@/lib/features/user/actions';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import type { FormProps } from 'antd';
-import { Button, Form, Input, Typography } from 'antd';
-import React from 'react';
+import { Button, Form, Input, notification, Typography } from 'antd';
+import React, { useEffect } from 'react';
 
 type FieldType = {
-    email?: string;
+    email: string;
 };
 
 export const ForgotPasswordForm: React.FC<{ title?: string }> = ({ title }) => {
+    const [form] = Form.useForm();
+    const dispatch = useAppDispatch();
+    const { isLoading, isSuccess, isError, errorMessage } = useAppSelector(
+        state => state.user,
+    );
+
+    useEffect(() => {
+        if (isSuccess) {
+            notification.success({
+                message: 'Password Reset',
+                description:
+                    'We’ve sent a password reset email to your inbox. Please check your email and follow the instructions to reset your password.',
+                placement: 'top',
+            });
+        }
+
+        if (isError) {
+            notification.error({
+                message: 'Error',
+                description: errorMessage,
+                placement: 'top',
+            });
+        }
+    }, [isSuccess, isError]);
+
     const onFinish: FormProps<FieldType>['onFinish'] = values => {
-        console.log('Success:', values);
+        dispatch(forgotPassword(values));
     };
 
-    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] =
-        errorInfo => {
-            console.log('Failed:', errorInfo);
-        };
     return (
         <div className="w-100 rounded-xl border border-gray-100 bg-white p-5 shadow-md">
             {title && (
@@ -28,8 +51,8 @@ export const ForgotPasswordForm: React.FC<{ title?: string }> = ({ title }) => {
                 name="forgot-password"
                 layout="vertical"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
+                form={form}
             >
                 <Form.Item<FieldType>
                     label="Email"
@@ -50,6 +73,7 @@ export const ForgotPasswordForm: React.FC<{ title?: string }> = ({ title }) => {
                         type="default"
                         htmlType="submit"
                         className="mt-5 w-100 max-w-xs"
+                        loading={isLoading}
                     >
                         Submit
                     </Button>
@@ -58,7 +82,7 @@ export const ForgotPasswordForm: React.FC<{ title?: string }> = ({ title }) => {
                     href="/login"
                     className="mb-5 flex justify-center"
                 >
-                    All set? Log in now{' '}
+                    Go back to login{' '}
                 </Typography.Link>
             </Form>
         </div>

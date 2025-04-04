@@ -94,7 +94,7 @@ export const LoginForm: React.FC<{ title?: string }> = ({ title }) => {
                     Don't have an account? Register here
                 </Typography.Link>
                 {isError ? (
-                    <div className="w-100 max-w-xs text-center">
+                    <div className="flex justify-center">
                         <Typography.Text type="danger">
                             {errorMessage}
                         </Typography.Text>
