@@ -4,10 +4,11 @@ import './globals.css';
 import { ConfigProvider } from 'antd';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import StoreProvider from './StoreProvider';
+
 import theme from '@/app/theme/themeConfig';
 
 import AntdRegistry from './AntdRegistry';
+import StoreProvider from './StoreProvider';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',

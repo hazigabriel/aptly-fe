@@ -2,10 +2,11 @@
 
 import type { FormProps } from 'antd';
 import { Button, Form, Input, Typography } from 'antd';
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { login } from '@/lib/features/user/actions';
 import { redirect } from 'next/navigation';
+import React, { useEffect } from 'react';
+
+import { login } from '@/lib/features/user/actions';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 type FieldType = {
     email: string;

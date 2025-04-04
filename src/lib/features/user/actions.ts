@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { post } from '../../../utilities/http';
 
 interface AuthResponse {

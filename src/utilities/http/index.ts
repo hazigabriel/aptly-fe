@@ -71,4 +71,4 @@ const deleteRequest = async <T>(
     return request<T>('delete', url, data, customHeaders);
 };
 
-export { get, post, put, deleteRequest };
+export { deleteRequest, get, post, put };

@@ -1,10 +1,11 @@
 'use client';
 
-import { forgotPassword } from '@/lib/features/user/actions';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import type { FormProps } from 'antd';
 import { Button, Form, Input, notification, Typography } from 'antd';
 import React, { useEffect } from 'react';
+
+import { forgotPassword } from '@/lib/features/user/actions';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 type FieldType = {
     email: string;

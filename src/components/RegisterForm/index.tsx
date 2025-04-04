@@ -1,12 +1,13 @@
 'use client';
 
-import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import type { FormProps } from 'antd';
 import { Button, Form, Input, Typography } from 'antd';
-import React, { useEffect } from 'react';
-import { redirect } from 'next/navigation';
-import { register } from '@/lib/features/user/actions';
 import { jwtDecode } from 'jwt-decode';
+import { redirect } from 'next/navigation';
+import React, { useEffect } from 'react';
+
+import { register } from '@/lib/features/user/actions';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 type FieldType = {
     firstName: string;

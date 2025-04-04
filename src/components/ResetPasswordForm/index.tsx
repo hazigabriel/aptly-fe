@@ -1,11 +1,12 @@
 'use client';
 
-import { resetPassword } from '@/lib/features/user/actions';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import type { FormProps } from 'antd';
 import { Button, Form, Input, notification, Typography } from 'antd';
 import { redirect, useSearchParams } from 'next/navigation';
 import React, { useEffect } from 'react';
+
+import { resetPassword } from '@/lib/features/user/actions';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 type FieldType = {
     password: string;
