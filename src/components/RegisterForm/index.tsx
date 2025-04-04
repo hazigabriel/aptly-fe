@@ -1,26 +1,40 @@
 'use client';
 
+import { useAppSelector, useAppDispatch } from '@/lib/hooks';
 import type { FormProps } from 'antd';
 import { Button, Form, Input, Typography } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { redirect } from 'next/navigation';
+import { register } from '@/lib/features/user/actions';
+import { jwtDecode } from 'jwt-decode';
 
 type FieldType = {
-    email?: string;
-    password?: string;
-    passwordConfirm?: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
 };
 
 export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
     const [form] = Form.useForm();
+    const dispatch = useAppDispatch();
+    const { userToken, isLoading, isError, errorMessage } = useAppSelector(
+        state => state.user,
+    );
+
+    useEffect(() => {
+        if (userToken) {
+            redirect('/dashboard');
+        }
+    }, [userToken]);
 
     const onFinish: FormProps<FieldType>['onFinish'] = values => {
-        console.log('Success:', values);
-    };
-
-    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] =
-        errorInfo => {
-            console.log('Failed:', errorInfo);
+        const newUser = {
+            email: values.email,
+            password: values.password,
         };
+
+        dispatch(register(newUser));
+    };
 
     return (
         <div className="w-100 rounded-xl border border-gray-100 bg-white p-5 shadow-md">
@@ -33,7 +47,6 @@ export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
                 name="register"
                 layout="vertical"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 form={form}
             >
@@ -99,6 +112,7 @@ export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
                         type="default"
                         htmlType="submit"
                         className="mt-5 w-100 max-w-xs"
+                        loading={isLoading}
                     >
                         Submit
                     </Button>
@@ -109,6 +123,15 @@ export const RegisterForm: React.FC<{ title?: string }> = ({ title }) => {
                 >
                     Already have an account? Log in here
                 </Typography.Link>
+                {isError ? (
+                    <div className="w-100 max-w-xs text-center">
+                        <Typography.Text type="danger">
+                            {errorMessage}
+                        </Typography.Text>
+                    </div>
+                ) : (
+                    ''
+                )}
             </Form>
         </div>
     );

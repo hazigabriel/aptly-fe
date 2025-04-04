@@ -2,24 +2,36 @@
 
 import type { FormProps } from 'antd';
 import { Button, Form, Input, Typography } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { login } from '@/lib/features/user/actions';
+import { redirect } from 'next/navigation';
 
 type FieldType = {
-    email?: string;
-    password?: string;
+    email: string;
+    password: string;
 };
 
 export const LoginForm: React.FC<{ title?: string }> = ({ title }) => {
+    const dispatch = useAppDispatch();
+    const { userToken, isLoading, isError, errorMessage } = useAppSelector(
+        state => state.user,
+    );
+
+    useEffect(() => {
+        if (userToken) {
+            redirect('/dashboard');
+        }
+    }, [userToken]);
+
     const onFinish: FormProps<FieldType>['onFinish'] = values => {
-        console.log('Success:', values);
+        dispatch(login(values));
     };
 
-    const onFinishFailed: FormProps<FieldType>['onFinishFailed'] =
-        errorInfo => {
-            console.log('Failed:', errorInfo);
-        };
     return (
-        <div className="w-100 rounded-xl border border-gray-100 bg-white p-5 shadow-md">
+        <div
+            className={`w-100 rounded-xl border bg-white p-5 shadow-md transition ${isError ? 'border-red-200' : 'border-gray-100'}`}
+        >
             {title && (
                 <Typography.Title className="pb-5 text-center" level={3}>
                     {title}
@@ -29,7 +41,6 @@ export const LoginForm: React.FC<{ title?: string }> = ({ title }) => {
                 name="login"
                 layout="vertical"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
                 <Form.Item<FieldType>
@@ -71,6 +82,7 @@ export const LoginForm: React.FC<{ title?: string }> = ({ title }) => {
                         type="default"
                         htmlType="submit"
                         className="mt-5 w-100 max-w-xs"
+                        loading={isLoading}
                     >
                         Submit
                     </Button>
@@ -81,6 +93,15 @@ export const LoginForm: React.FC<{ title?: string }> = ({ title }) => {
                 >
                     Don't have an account? Register here
                 </Typography.Link>
+                {isError ? (
+                    <div className="w-100 max-w-xs text-center">
+                        <Typography.Text type="danger">
+                            {errorMessage}
+                        </Typography.Text>
+                    </div>
+                ) : (
+                    ''
+                )}
             </Form>
         </div>
     );
