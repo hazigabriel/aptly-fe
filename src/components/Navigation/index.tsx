@@ -1,3 +1,3 @@
 export const Navigation = () => {
-    return <div>tes</div>;
+    return <div>THE NAVIGATION</div>;
 };

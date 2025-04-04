@@ -5,6 +5,7 @@ import '@ant-design/v5-patch-for-react-19';
 
 import { AntdRegistry as AntdNextJsRegistry } from '@ant-design/nextjs-registry';
 import { unstableSetRender } from 'antd';
+import { App as AntdApp } from 'antd';
 import { createRoot } from 'react-dom/client';
 
 // added from https://ant.design/docs/react/v5-for-19
@@ -25,5 +26,9 @@ export default function AntdRegistry({
 }: {
     children: React.ReactNode;
 }) {
-    return <AntdNextJsRegistry>{children}</AntdNextJsRegistry>;
+    return (
+        <AntdNextJsRegistry>
+            <AntdApp>{children}</AntdApp>
+        </AntdNextJsRegistry>
+    );
 }
